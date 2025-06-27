@@ -434,6 +434,1176 @@ const App: React.FC = () => {
                             </div>
                         </div>
 
+                        {/* 宠物年龄研究项目卡片 */}
+                        <div style={{
+                            aspectRatio: '1',
+                            backgroundColor: 'white',
+                            borderRadius: '16px',
+                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                            overflow: 'hidden',
+                            border: '1px solid #f3f4f6',
+                            transition: 'all 0.3s ease',
+                            cursor: 'pointer'
+                        }}
+                             onMouseEnter={(e) => {
+                                 e.currentTarget.style.transform = 'translateY(-4px)';
+                                 e.currentTarget.style.boxShadow = '0 10px 25px -3px rgba(0, 0, 0, 0.1)';
+                             }}
+                             onMouseLeave={(e) => {
+                                 e.currentTarget.style.transform = 'translateY(0)';
+                                 e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                             }}
+                        >
+                            {/* 卡片头部 - 渐变背景区域 */}
+                            <div style={{
+                                height: '100px',
+                                padding: '16px',
+                                color: 'white',
+                                position: 'relative',
+                                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', // 绿色渐变
+                            }}>
+                                {/* 顶部信息行 */}
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'flex-start',
+                                    marginBottom: '8px'
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '20px' }}>🐾</span>
+                                        <span style={{
+                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 500
+                                        }}>
+                    年龄研究
+                </span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        <div style={{
+                                            width: '8px',
+                                            height: '8px',
+                                            backgroundColor: '#22c55e',
+                                            borderRadius: '50%'
+                                        }}></div>
+                                        <span style={{
+                                            backgroundColor: '#22c55e',
+                                            color: '#15803d',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 500
+                                        }}>
+                    已完成
+                </span>
+                                    </div>
+                                </div>
+
+                                {/* 项目标题和描述 */}
+                                <h3 style={{
+                                    fontSize: '18px',
+                                    fontWeight: 'bold',
+                                    marginBottom: '6px',
+                                    margin: 0
+                                }}>
+                                    宠物年龄微生物组
+                                </h3>
+                                <p style={{
+                                    fontSize: '12px',
+                                    opacity: 0.9,
+                                    margin: 0
+                                }}>
+                                    不同年龄段菌群变化研究
+                                </p>
+                            </div>
+
+                            <div style={{
+                                display: 'flex',
+                                gap: '12px',
+                                padding: '12px',
+                            }}>
+                                {/* 样本数容器 */}
+                                <div style={{
+                                    flex: 1,
+                                    backgroundColor: '#f5f5f5',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#666',
+                                        marginBottom: '4px'
+                                    }}>
+                                        样本数
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#333'
+                                    }}>
+                                        450
+                                    </div>
+                                </div>
+
+                                {/* 测序技术容器 */}
+                                <div style={{
+                                    flex: 1,
+                                    backgroundColor: '#f5f5f5',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#666',
+                                        marginBottom: '4px'
+                                    }}>
+                                        测序技术
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#333'
+                                    }}>
+                                        16S rRNA V4
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 卡片内容区域 */}
+                            <div style={{ padding: '16px' }}>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#6b7280'
+                                    }}>
+                                        创建时间
+                                    </div>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        fontWeight: 500
+                                    }}>
+                                        2025-08-10
+                                    </div>
+                                </div>
+
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginTop: '8px'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#6b7280'
+                                    }}>
+                                        参与人员
+                                    </div>
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '4px'
+                                    }}>
+                                        <div style={{
+                                            width: '24px',
+                                            height: '24px',
+                                            borderRadius: '50%',
+                                            backgroundColor: '#3b82f6', // 蓝色
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '10px',
+                                            fontWeight: 500,
+                                            color: 'white'
+                                        }}>
+                                            张
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 狗狗腹泻研究项目卡片 */}
+                        <div style={{
+                            aspectRatio: '1',
+                            backgroundColor: 'white',
+                            borderRadius: '16px',
+                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                            overflow: 'hidden',
+                            border: '1px solid #f3f4f6',
+                            transition: 'all 0.3s ease',
+                            cursor: 'pointer'
+                        }}
+                             onMouseEnter={(e) => {
+                                 e.currentTarget.style.transform = 'translateY(-4px)';
+                                 e.currentTarget.style.boxShadow = '0 10px 25px -3px rgba(0, 0, 0, 0.1)';
+                             }}
+                             onMouseLeave={(e) => {
+                                 e.currentTarget.style.transform = 'translateY(0)';
+                                 e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                             }}
+                        >
+                            {/* 卡片头部 - 渐变背景区域 */}
+                            <div style={{
+                                height: '100px',
+                                padding: '16px',
+                                color: 'white',
+                                position: 'relative',
+                                background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', // 红色渐变
+                            }}>
+                                {/* 顶部信息行 */}
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'flex-start',
+                                    marginBottom: '8px'
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '20px' }}>🤢</span>
+                                        <span style={{
+                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 500
+                                        }}>
+                    消化系统
+                </span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        <div style={{
+                                            width: '8px',
+                                            height: '8px',
+                                            backgroundColor: '#fbbf24',
+                                            borderRadius: '50%'
+                                        }}></div>
+                                        <span style={{
+                                            backgroundColor: '#fbbf24',
+                                            color: '#92400e',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 500
+                                        }}>
+                    进行中
+                </span>
+                                    </div>
+                                </div>
+
+                                {/* 项目标题和描述 */}
+                                <h3 style={{
+                                    fontSize: '18px',
+                                    fontWeight: 'bold',
+                                    marginBottom: '8px',
+                                    margin: 0
+                                }}>
+                                    犬腹泻微生物组
+                                </h3>
+                                <p style={{
+                                    fontSize: '12px',
+                                    opacity: 0.9,
+                                    margin: 0
+                                }}>
+                                    腹泻相关肠道菌群分析
+                                </p>
+                            </div>
+
+                            <div style={{
+                                display: 'flex',
+                                gap: '12px',
+                                padding: '12px',
+                            }}>
+                                {/* 样本数容器 */}
+                                <div style={{
+                                    flex: 1,
+                                    backgroundColor: '#f5f5f5',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#666',
+                                        marginBottom: '4px'
+                                    }}>
+                                        样本数
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#333'
+                                    }}>
+                                        280
+                                    </div>
+                                </div>
+
+                                {/* 测序技术容器 */}
+                                <div style={{
+                                    flex: 1,
+                                    backgroundColor: '#f5f5f5',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#666',
+                                        marginBottom: '4px'
+                                    }}>
+                                        测序技术
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#333'
+                                    }}>
+                                        宏基因组测序
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 卡片内容区域 */}
+                            <div style={{ padding: '16px' }}>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#6b7280'
+                                    }}>
+                                        创建时间
+                                    </div>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        fontWeight: 500
+                                    }}>
+                                        2025-06-20
+                                    </div>
+                                </div>
+
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginTop: '8px'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#6b7280'
+                                    }}>
+                                        参与人员
+                                    </div>
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '4px'
+                                    }}>
+                                        <div style={{
+                                            width: '24px',
+                                            height: '24px',
+                                            borderRadius: '50%',
+                                            backgroundColor: '#3b82f6', // 蓝色
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '10px',
+                                            fontWeight: 500,
+                                            color: 'white'
+                                        }}>
+                                            张
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 狗狗甲减研究项目卡片 */}
+                        <div style={{
+                            aspectRatio: '1',
+                            backgroundColor: 'white',
+                            borderRadius: '16px',
+                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                            overflow: 'hidden',
+                            border: '1px solid #f3f4f6',
+                            transition: 'all 0.3s ease',
+                            cursor: 'pointer'
+                        }}
+                             onMouseEnter={(e) => {
+                                 e.currentTarget.style.transform = 'translateY(-4px)';
+                                 e.currentTarget.style.boxShadow = '0 10px 25px -3px rgba(0, 0, 0, 0.1)';
+                             }}
+                             onMouseLeave={(e) => {
+                                 e.currentTarget.style.transform = 'translateY(0)';
+                                 e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                             }}
+                        >
+                            {/* 卡片头部 - 渐变背景区域 */}
+                            <div style={{
+                                height: '100px',
+                                padding: '16px',
+                                color: 'white',
+                                position: 'relative',
+                                background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)', // 紫色渐变
+                            }}>
+                                {/* 顶部信息行 */}
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'flex-start',
+                                    marginBottom: '8px'
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '20px' }}>🩺</span>
+                                        <span style={{
+                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 500
+                                        }}>
+                    内分泌
+                </span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        <div style={{
+                                            width: '8px',
+                                            height: '8px',
+                                            backgroundColor: '#3b82f6',
+                                            borderRadius: '50%'
+                                        }}></div>
+                                        <span style={{
+                                            backgroundColor: '#3b82f6',
+                                            color: '#1e40af',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 500
+                                        }}>
+                    筹备中
+                </span>
+                                    </div>
+                                </div>
+
+                                {/* 项目标题和描述 */}
+                                <h3 style={{
+                                    fontSize: '18px',
+                                    fontWeight: 'bold',
+                                    marginBottom: '8px',
+                                    margin: 0
+                                }}>
+                                    犬甲减微生物组
+                                </h3>
+                                <p style={{
+                                    fontSize: '12px',
+                                    opacity: 0.9,
+                                    margin: 0
+                                }}>
+                                    甲状腺功能减退菌群研究
+                                </p>
+                            </div>
+
+                            <div style={{
+                                display: 'flex',
+                                gap: '12px',
+                                padding: '12px',
+                            }}>
+                                {/* 样本数容器 */}
+                                <div style={{
+                                    flex: 1,
+                                    backgroundColor: '#f5f5f5',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#666',
+                                        marginBottom: '4px'
+                                    }}>
+                                        样本数
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#333'
+                                    }}>
+                                        160
+                                    </div>
+                                </div>
+
+                                {/* 测序技术容器 */}
+                                <div style={{
+                                    flex: 1,
+                                    backgroundColor: '#f5f5f5',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#666',
+                                        marginBottom: '4px'
+                                    }}>
+                                        测序技术
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#333'
+                                    }}>
+                                        16S rRNA V3-V4
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 卡片内容区域 */}
+                            <div style={{ padding: '16px' }}>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#6b7280'
+                                    }}>
+                                        创建时间
+                                    </div>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        fontWeight: 500
+                                    }}>
+                                        2025-09-05
+                                    </div>
+                                </div>
+
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginTop: '8px'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#6b7280'
+                                    }}>
+                                        参与人员
+                                    </div>
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '4px'
+                                    }}>
+                                        <div style={{
+                                            width: '24px',
+                                            height: '24px',
+                                            borderRadius: '50%',
+                                            backgroundColor: '#3b82f6', // 蓝色
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '10px',
+                                            fontWeight: 500,
+                                            color: 'white'
+                                        }}>
+                                            张
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 狗狗癫痫研究项目卡片 */}
+                        <div style={{
+                            aspectRatio: '1',
+                            backgroundColor: 'white',
+                            borderRadius: '16px',
+                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                            overflow: 'hidden',
+                            border: '1px solid #f3f4f6',
+                            transition: 'all 0.3s ease',
+                            cursor: 'pointer'
+                        }}
+                             onMouseEnter={(e) => {
+                                 e.currentTarget.style.transform = 'translateY(-4px)';
+                                 e.currentTarget.style.boxShadow = '0 10px 25px -3px rgba(0, 0, 0, 0.1)';
+                             }}
+                             onMouseLeave={(e) => {
+                                 e.currentTarget.style.transform = 'translateY(0)';
+                                 e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                             }}
+                        >
+                            {/* 卡片头部 - 渐变背景区域 */}
+                            <div style={{
+                                height: '100px',
+                                padding: '16px',
+                                color: 'white',
+                                position: 'relative',
+                                background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)', // 橙色渐变
+                            }}>
+                                {/* 顶部信息行 */}
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'flex-start',
+                                    marginBottom: '8px'
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '20px' }}>⚡</span>
+                                        <span style={{
+                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 500
+                                        }}>
+                    神经系统
+                </span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        <div style={{
+                                            width: '8px',
+                                            height: '8px',
+                                            backgroundColor: '#fbbf24',
+                                            borderRadius: '50%'
+                                        }}></div>
+                                        <span style={{
+                                            backgroundColor: '#fbbf24',
+                                            color: '#92400e',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 500
+                                        }}>
+                    进行中
+                </span>
+                                    </div>
+                                </div>
+
+                                {/* 项目标题和描述 */}
+                                <h3 style={{
+                                    fontSize: '18px',
+                                    fontWeight: 'bold',
+                                    marginBottom: '6px',
+                                    margin: 0
+                                }}>
+                                    犬癫痫微生物组
+                                </h3>
+                                <p style={{
+                                    fontSize: '12px',
+                                    opacity: 0.9,
+                                    margin: 0
+                                }}>
+                                    癫痫相关肠脑轴菌群研究
+                                </p>
+                            </div>
+
+                            <div style={{
+                                display: 'flex',
+                                gap: '12px',
+                                padding: '12px',
+                            }}>
+                                {/* 样本数容器 */}
+                                <div style={{
+                                    flex: 1,
+                                    backgroundColor: '#f5f5f5',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#666',
+                                        marginBottom: '4px'
+                                    }}>
+                                        样本数
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#333'
+                                    }}>
+                                        200
+                                    </div>
+                                </div>
+
+                                {/* 测序技术容器 */}
+                                <div style={{
+                                    flex: 1,
+                                    backgroundColor: '#f5f5f5',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#666',
+                                        marginBottom: '4px'
+                                    }}>
+                                        测序技术
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#333'
+                                    }}>
+                                        16S rRNA V3-V4
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 卡片内容区域 */}
+                            <div style={{ padding: '16px' }}>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#6b7280'
+                                    }}>
+                                        创建时间
+                                    </div>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        fontWeight: 500
+                                    }}>
+                                        2025-05-12
+                                    </div>
+                                </div>
+
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginTop: '8px'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#6b7280'
+                                    }}>
+                                        参与人员
+                                    </div>
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '4px'
+                                    }}>
+                                        <div style={{
+                                            width: '24px',
+                                            height: '24px',
+                                            borderRadius: '50%',
+                                            backgroundColor: '#3b82f6', // 蓝色
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '10px',
+                                            fontWeight: 500,
+                                            color: 'white'
+                                        }}>
+                                            张
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 狗狗IBD研究项目卡片 */}
+                        <div style={{
+                            aspectRatio: '1',
+                            backgroundColor: 'white',
+                            borderRadius: '16px',
+                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                            overflow: 'hidden',
+                            border: '1px solid #f3f4f6',
+                            transition: 'all 0.3s ease',
+                            cursor: 'pointer'
+                        }}
+                             onMouseEnter={(e) => {
+                                 e.currentTarget.style.transform = 'translateY(-4px)';
+                                 e.currentTarget.style.boxShadow = '0 10px 25px -3px rgba(0, 0, 0, 0.1)';
+                             }}
+                             onMouseLeave={(e) => {
+                                 e.currentTarget.style.transform = 'translateY(0)';
+                                 e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                             }}
+                        >
+                            {/* 卡片头部 - 渐变背景区域 */}
+                            <div style={{
+                                height: '100px',
+                                padding: '16px',
+                                color: 'white',
+                                position: 'relative',
+                                background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)', // 深蓝色渐变
+                            }}>
+                                {/* 顶部信息行 */}
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'flex-start',
+                                    marginBottom: '8px'
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '20px' }}>🦠</span>
+                                        <span style={{
+                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 500
+                                        }}>
+                    炎症性疾病
+                </span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        <div style={{
+                                            width: '8px',
+                                            height: '8px',
+                                            backgroundColor: '#22c55e',
+                                            borderRadius: '50%'
+                                        }}></div>
+                                        <span style={{
+                                            backgroundColor: '#22c55e',
+                                            color: '#15803d',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 500
+                                        }}>
+                    已完成
+                </span>
+                                    </div>
+                                </div>
+
+                                {/* 项目标题和描述 */}
+                                <h3 style={{
+                                    fontSize: '18px',
+                                    fontWeight: 'bold',
+                                    marginBottom: '6px',
+                                    margin: 0
+                                }}>
+                                    犬IBD微生物组
+                                </h3>
+                                <p style={{
+                                    fontSize: '12px',
+                                    opacity: 0.9,
+                                    margin: 0
+                                }}>
+                                    炎症性肠病菌群失调研究
+                                </p>
+                            </div>
+
+                            <div style={{
+                                display: 'flex',
+                                gap: '12px',
+                                padding: '12px',
+                            }}>
+                                {/* 样本数容器 */}
+                                <div style={{
+                                    flex: 1,
+                                    backgroundColor: '#f5f5f5',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#666',
+                                        marginBottom: '4px'
+                                    }}>
+                                        样本数
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#333'
+                                    }}>
+                                        350
+                                    </div>
+                                </div>
+
+                                {/* 测序技术容器 */}
+                                <div style={{
+                                    flex: 1,
+                                    backgroundColor: '#f5f5f5',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#666',
+                                        marginBottom: '4px'
+                                    }}>
+                                        测序技术
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#333'
+                                    }}>
+                                        宏基因组测序
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 卡片内容区域 */}
+                            <div style={{ padding: '16px' }}>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#6b7280'
+                                    }}>
+                                        创建时间
+                                    </div>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        fontWeight: 500
+                                    }}>
+                                        2025-03-18
+                                    </div>
+                                </div>
+
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginTop: '8px'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#6b7280'
+                                    }}>
+                                        参与人员
+                                    </div>
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '4px'
+                                    }}>
+                                        <div style={{
+                                            width: '24px',
+                                            height: '24px',
+                                            borderRadius: '50%',
+                                            backgroundColor: '#3b82f6', // 蓝色
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '10px',
+                                            fontWeight: 500,
+                                            color: 'white'
+                                        }}>
+                                            张
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 狗狗老年痴呆研究项目卡片 */}
+                        <div style={{
+                            aspectRatio: '1',
+                            backgroundColor: 'white',
+                            borderRadius: '16px',
+                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                            overflow: 'hidden',
+                            border: '1px solid #f3f4f6',
+                            transition: 'all 0.3s ease',
+                            cursor: 'pointer'
+                        }}
+                             onMouseEnter={(e) => {
+                                 e.currentTarget.style.transform = 'translateY(-4px)';
+                                 e.currentTarget.style.boxShadow = '0 10px 25px -3px rgba(0, 0, 0, 0.1)';
+                             }}
+                             onMouseLeave={(e) => {
+                                 e.currentTarget.style.transform = 'translateY(0)';
+                                 e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                             }}
+                        >
+                            {/* 卡片头部 - 渐变背景区域 */}
+                            <div style={{
+                                height: '100px',
+                                padding: '16px',
+                                color: 'white',
+                                position: 'relative',
+                                background: 'linear-gradient(135deg, #581c87 0%, #4c1d95 100%)', // 深紫色渐变
+                            }}>
+                                {/* 顶部信息行 */}
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'flex-start',
+                                    marginBottom: '8px'
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '20px' }}>🧠</span>
+                                        <span style={{
+                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 500
+                                        }}>
+                    神经退化
+                </span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        <div style={{
+                                            width: '8px',
+                                            height: '8px',
+                                            backgroundColor: '#3b82f6',
+                                            borderRadius: '50%'
+                                        }}></div>
+                                        <span style={{
+                                            backgroundColor: '#3b82f6',
+                                            color: '#1e40af',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            fontSize: '12px',
+                                            fontWeight: 500
+                                        }}>
+                    筹备中
+                </span>
+                                    </div>
+                                </div>
+
+                                {/* 项目标题和描述 */}
+                                <h3 style={{
+                                    fontSize: '18px',
+                                    fontWeight: 'bold',
+                                    marginBottom: '6px',
+                                    margin: 0
+                                }}>
+                                    犬痴呆微生物组
+                                </h3>
+                                <p style={{
+                                    fontSize: '12px',
+                                    opacity: 0.9,
+                                    margin: 0
+                                }}>
+                                    老年认知障碍菌群机制
+                                </p>
+                            </div>
+
+                            <div style={{
+                                display: 'flex',
+                                gap: '12px',
+                                padding: '12px',
+                            }}>
+                                {/* 样本数容器 */}
+                                <div style={{
+                                    flex: 1,
+                                    backgroundColor: '#f5f5f5',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#666',
+                                        marginBottom: '4px'
+                                    }}>
+                                        样本数
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#333'
+                                    }}>
+                                        120
+                                    </div>
+                                </div>
+
+                                {/* 测序技术容器 */}
+                                <div style={{
+                                    flex: 1,
+                                    backgroundColor: '#f5f5f5',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    textAlign: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#666',
+                                        marginBottom: '4px'
+                                    }}>
+                                        测序技术
+                                    </div>
+                                    <div style={{
+                                        fontSize: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#333'
+                                    }}>
+                                        16S rRNA V4-V5
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 卡片内容区域 */}
+                            <div style={{ padding: '16px' }}>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#6b7280'
+                                    }}>
+                                        创建时间
+                                    </div>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        fontWeight: 500
+                                    }}>
+                                        2025-10-01
+                                    </div>
+                                </div>
+
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginTop: '8px'
+                                }}>
+                                    <div style={{
+                                        fontSize: '12px',
+                                        color: '#6b7280'
+                                    }}>
+                                        参与人员
+                                    </div>
+                                    <div style={{
+                                        display: 'flex',
+                                        gap: '4px'
+                                    }}>
+                                        <div style={{
+                                            width: '24px',
+                                            height: '24px',
+                                            borderRadius: '50%',
+                                            backgroundColor: '#3b82f6', // 蓝色
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '10px',
+                                            fontWeight: 500,
+                                            color: 'white'
+                                        }}>
+                                            张
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         {/* 可以添加更多项目卡片 */}
                         <div style={{
                             aspectRatio: '1',
