@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, Row, Col, Input, Button, Tag, Modal, Typography, Space, Tooltip, List, Select, Divider, Form, Upload, message } from 'antd';
 import { SearchOutlined, PlusOutlined, FileTextOutlined, CodeOutlined, DownloadOutlined, CopyOutlined, EditOutlined, FileAddOutlined, FileImageOutlined, FileMarkdownOutlined } from '@ant-design/icons';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { tomorrow, base16AteliersulphurpoolLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const { Title, Paragraph, Text } = Typography;
 const { Search } = Input;
@@ -124,7 +124,7 @@ const CodeRepository: React.FC = () => {
       return renderPipeline(selectedCode.content);
     }
     return (
-      <SyntaxHighlighter language={langMap[selectedCode.language] || 'text'} style={tomorrow} showLineNumbers wrapLongLines>
+      <SyntaxHighlighter language={langMap[selectedCode.language] || 'text'} style={base16AteliersulphurpoolLight} showLineNumbers wrapLongLines>
         {selectedCode.content}
       </SyntaxHighlighter>
     );
