@@ -11,7 +11,8 @@ import {
     FolderOutlined,
     BookOutlined,
     PlusOutlined,
-    FilterOutlined
+    FilterOutlined,
+    BranchesOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import {Breadcrumb, Button, Layout, Menu, theme} from 'antd';
@@ -27,8 +28,9 @@ import Metadata from './pages/Metadata';
 import StatisticalMethodsKnowledge from './pages/StatisticalMethodsKnowledge';
 import CodeRepository from './pages/CodeRepository';
 import ClassificationModels from './pages/ClassificationModels';
+import Workflow from './pages/Workflow';
 
-const {Header, Sider, Content} = Layout;
+const {Header, Sider, Content, Footer} = Layout;
 
 const AppContent: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -41,6 +43,17 @@ const AppContent: React.FC = () => {
     const handleAddSubject = () => {
         console.log('新增课题');
         // 这里可以添加新增课题的逻辑
+    };
+
+    const siderStyle: React.CSSProperties = {
+        overflow: 'auto',
+        height: '100vh',
+        position: 'sticky',
+        insetInlineStart: 0,
+        top: 0,
+        bottom: 0,
+        scrollbarWidth: 'thin',
+        scrollbarGutter: 'stable',
     };
 
     const handleMenuClick = (key: string) => {
@@ -78,6 +91,9 @@ const AppContent: React.FC = () => {
             case '6-1':
                 navigate('/classification-models');
                 break;
+            case 'workflow':
+                navigate('/workflow');
+                break;
             default:
                 break;
         }
@@ -108,6 +124,8 @@ const AppContent: React.FC = () => {
                 return ['code-repository'];
             case '/classification-models':
                 return ['6-1'];
+            case '/workflow':
+                return ['workflow'];
             default:
                 return ['1'];
         }
@@ -197,6 +215,11 @@ const AppContent: React.FC = () => {
             label: '科研项目',
         },
         {
+            key: 'workflow',
+            icon: <BranchesOutlined/>,
+            label: '工作流',
+        },
+        {
             key: '10',
             icon: <VideoCameraOutlined/>,
             label: '课题研究',
@@ -207,7 +230,9 @@ const AppContent: React.FC = () => {
         <Layout
             style={{
                 height: '100vh',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                padding: 4,
+                // background: '#fafafa'
             }}
         >
             <Sider
@@ -215,7 +240,7 @@ const AppContent: React.FC = () => {
                 collapsible
                 collapsed={collapsed}
                 style={{
-                    background: '#fff', // 设置为白色背景
+                    background: '#f5f5f5', // 设置为白色背景
                     height: '100vh', // 确保Sider占满高度
                     overflow: 'auto' // Sider内部可滚动（如果菜单太多）
                 }}
@@ -227,33 +252,34 @@ const AppContent: React.FC = () => {
                     // marginTop: '20px',
                 }}
                 >谷禾菌研</div>
+                <Button
+                    type="text"
+                    icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
+                    onClick={() => setCollapsed(!collapsed)}
+                    style={{
+                        fontSize: '16px',
+                        width: 64,
+                        height: 64,
+                    }}
+                />
                 <Menu
-                    theme="light"
+                    // theme="light"
                     mode="inline"
                     selectedKeys={getSelectedKey()}
                     items={items}
                     onClick={({ key }) => handleMenuClick(key)}
                 />
             </Sider>
-            <Layout>
-                <Header style={{padding: 0, background: colorBgContainer}}>
-                    <Button
-                        type="text"
-                        icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
-                        onClick={() => setCollapsed(!collapsed)}
-                        style={{
-                            fontSize: '16px',
-                            width: 64,
-                            height: 64,
-                        }}
-                    />
-                </Header>
-
+            <Layout style={{
+                background: '#fff',
+                borderRadius: borderRadiusLG,
+                margin: '20px 10px'
+            }}>
                 <Content
                     style={{
-                        margin: '24px 16px',
-                        padding: 24,
-                        background: colorBgContainer,
+                        // margin: '24px 16px',
+                        // padding: 20,
+                        background: '#fff',
                         borderRadius: borderRadiusLG,
                         overflow: 'auto',
                         flex: 1,
@@ -271,11 +297,40 @@ const AppContent: React.FC = () => {
                         <Route path="/statistical-methods" element={<StatisticalMethodsKnowledge />} />
                         <Route path="/code-repository" element={<CodeRepository />} />
                         <Route path="/classification-models" element={<ClassificationModels />} />
+                        <Route path="/workflow" element={<Workflow />} />
                     </Routes>
                 </Content>
             </Layout>
         </Layout>
+
+        // <Layout>
+        //     <Sider style={siderStyle}>
+        //         <div className="demo-logo-vertical" />
+        //         <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={items} />
+        //     </Sider>
+        //     <Layout style={{height: '100vh'}}>
+        //         {/*<Header style={{ padding: 0, background: colorBgContainer }} />*/}
+        //         <Content style={{ margin: '24px 16px', overflow: 'initial'}}>
+        //             <div
+        //                 style={{
+        //                     padding: 24,
+        //                     height: '90vh',
+        //                     textAlign: 'center',
+        //                     background: colorBgContainer,
+        //                     borderRadius: borderRadiusLG,
+        //                 }}
+        //             >
+        //                 <p>long content</p>
+        //             </div>
+        //         </Content>
+        //         {/*<Footer style={{ textAlign: 'center' }}>*/}
+        //         {/*    Ant Design ©{new Date().getFullYear()} Created by Ant UED*/}
+        //         {/*</Footer>*/}
+        //     </Layout>
+        // </Layout>
     );
+
+
 };
 
 const App: React.FC = () => {
