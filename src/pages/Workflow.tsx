@@ -4,17 +4,17 @@ import {
   MiniMap,
   Controls,
   Background,
-  useNodesState,
-  useEdgesState,
   addEdge,
   Panel,
   Handle,
   Position,
   getBezierPath,
+  applyNodeChanges,
+  applyEdgeChanges,
 } from '@xyflow/react';
-import type { Connection } from '@xyflow/react';
+import type { Connection, Node, Edge } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { Button, Card, Space, Tooltip, Modal, Input, Select, message } from 'antd';
+import { Button, Card, Space, Tooltip, Modal, Input, Select, message, Drawer, List, Tag, Divider } from 'antd';
 import {
   PlusOutlined,
   SaveOutlined,
@@ -29,6 +29,11 @@ import {
   FilterOutlined,
   FileTextOutlined,
   ScissorOutlined,
+  FolderOutlined,
+  EyeOutlined,
+  EditOutlined,
+  CopyOutlined,
+  GroupOutlined,
 } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -414,18 +419,73 @@ const OutputNode = ({ data }: { data: any }) => (
   </div>
 );
 
+// 新增：Group节点组件（父节点）
+const GroupNode = ({ data }: { data: any }) => (
+  <div style={{
+    padding: '12px',
+    borderRadius: '8px',
+    border: '2px solid #722ed1',
+    background: 'linear-gradient(135deg, #f9f0ff 0%, #e6d7ff 100%)',
+    boxShadow: '0 4px 12px rgba(114, 46, 209, 0.2)',
+    minWidth: '200px',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    position: 'relative'
+  }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, marginBottom: '8px', fontSize: '14px' }}>
+      <GroupOutlined style={{ color: '#722ed1' }} />
+      <span>{data.label}</span>
+    </div>
+    <div style={{ fontSize: '12px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+        <span style={{ color: '#666' }}>子流程组</span>
+        <span style={{ color: '#666' }}>包含节点: {data.nodeCount || 0}</span>
+        <span style={{ color: '#666' }}>状态: {data.status || '活跃'}</span>
+      </div>
+    </div>
+  </div>
+);
+
 const nodeTypes: any = {
   dataNode: DataNode,
   analysisNode: AnalysisNode,
   processNode: ProcessNode,
   filterNode: FilterNode,
   outputNode: OutputNode,
+  group: GroupNode,
 };
 
+// 新增：Subflow类型定义
+interface Subflow {
+  id: string;
+  name: string;
+  description: string;
+  parentNodeId: string;
+  childNodeIds: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 const Workflow: React.FC = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes] = useState<Node[]>([]);
+  const [edges, setEdges] = useState<Edge[]>([]);
+  
+  const onNodesChange = useCallback(
+    (changes: any) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    [setNodes],
+  );
+  const onEdgesChange = useCallback(
+    (changes: any) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    [setEdges],
+  );
   const [isAddNodeModalVisible, setIsAddNodeModalVisible] = useState(false);
+  const [isSubflowDrawerVisible, setIsSubflowDrawerVisible] = useState(false);
+  const [isCreateSubflowModalVisible, setIsCreateSubflowModalVisible] = useState(false);
+  const [selectedNodes, setSelectedNodes] = useState<Node[]>([]);
+  const [subflows, setSubflows] = useState<Subflow[]>([]);
+  const [newSubflowData, setNewSubflowData] = useState({
+    name: '',
+    description: '',
+  });
   const [newNodeData, setNewNodeData] = useState({
     type: 'dataNode',
     label: '',
@@ -434,6 +494,179 @@ const Workflow: React.FC = () => {
     format: '',
     path: '',
   });
+
+  // 新增：创建子流程（使用parentId方式）
+  const createSubflow = () => {
+    console.log('创建子流程，选中的节点:', selectedNodes);
+    console.log('当前节点:', nodes);
+    
+    if (!newSubflowData.name) {
+      message.error('请输入子流程名称');
+      return;
+    }
+
+    if (selectedNodes.length === 0) {
+      message.error('请先选择要组合的节点');
+      return;
+    }
+
+    const parentNodeId = `group-${Date.now()}`;
+    const childNodeIds = selectedNodes.map(node => node.id);
+
+    // 创建父节点（group类型）
+    const parentNode = {
+      id: parentNodeId,
+      type: 'group',
+      position: { x: 250, y: 250 },
+      style: {
+        width: 300,
+        height: 200,
+      },
+      data: {
+        label: newSubflowData.name,
+        nodeCount: selectedNodes.length,
+        status: '活跃',
+      },
+    };
+
+    // 更新子节点，添加parentId
+    const updatedNodes = nodes.map((node: any) => {
+      if (childNodeIds.includes(node.id)) {
+        return {
+          ...node,
+          parentId: parentNodeId,
+          extent: 'parent',
+        };
+      }
+      return node;
+    });
+
+    // 添加父节点
+    setNodes([...updatedNodes, parentNode]);
+
+    // 保存子流程信息
+    const newSubflow: Subflow = {
+      id: parentNodeId,
+      name: newSubflowData.name,
+      description: newSubflowData.description,
+      parentNodeId: parentNodeId,
+      childNodeIds: childNodeIds,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    setSubflows(prev => [...prev, newSubflow]);
+    setNewSubflowData({ name: '', description: '' });
+    setSelectedNodes([]);
+    setIsCreateSubflowModalVisible(false);
+    message.success('子流程创建成功');
+  };
+
+  // 新增：展开子流程
+  const expandSubflow = (subflowId: string) => {
+    const subflow = subflows.find(sf => sf.id === subflowId);
+    if (!subflow) return;
+
+    // 移除子节点的parentId
+    const updatedNodes = nodes.map((node: any) => {
+      if (subflow.childNodeIds.includes(node.id)) {
+        const { parentId, extent, ...rest } = node;
+        return rest;
+      }
+      return node;
+    });
+
+    // 删除父节点
+    const filteredNodes = updatedNodes.filter((node: any) => node.id !== subflow.parentNodeId);
+
+    setNodes(filteredNodes);
+    message.success('子流程已展开');
+  };
+
+  // 新增：复制子流程
+  const copySubflow = (subflow: Subflow) => {
+    const newParentNodeId = `group-${Date.now()}`;
+    const newChildNodeIds = subflow.childNodeIds.map(id => `${id}-copy-${Date.now()}`);
+
+    // 复制子节点
+    const childNodesToCopy = nodes.filter((node: any) => 
+      subflow.childNodeIds.includes(node.id)
+    );
+
+    const copiedChildNodes = childNodesToCopy.map((node: any) => ({
+      ...node,
+      id: `${node.id}-copy-${Date.now()}`,
+      parentId: newParentNodeId,
+      extent: 'parent',
+    }));
+
+    // 创建新的父节点
+    const newParentNode = {
+      id: newParentNodeId,
+      type: 'group',
+      position: { x: 350, y: 350 },
+      style: {
+        width: 300,
+        height: 200,
+      },
+      data: {
+        label: `${subflow.name} (副本)`,
+        nodeCount: subflow.childNodeIds.length,
+        status: '活跃',
+      },
+    };
+
+    // 添加复制的节点
+    setNodes((nds: any) => [...nds, ...copiedChildNodes, newParentNode]);
+
+    // 保存新的子流程信息
+    const newSubflow: Subflow = {
+      ...subflow,
+      id: newParentNodeId,
+      name: `${subflow.name} (副本)`,
+      parentNodeId: newParentNodeId,
+      childNodeIds: newChildNodeIds,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    setSubflows(prev => [...prev, newSubflow]);
+    message.success('子流程已复制');
+  };
+
+  // 新增：删除子流程
+  const deleteSubflow = (subflowId: string) => {
+    const subflow = subflows.find(sf => sf.id === subflowId);
+    if (!subflow) return;
+
+    // 删除父节点和所有子节点
+    const nodesToKeep = nodes.filter((node: any) => 
+      node.id !== subflow.parentNodeId && 
+      !subflow.childNodeIds.includes(node.id)
+    );
+
+    setNodes(nodesToKeep);
+    setSubflows(prev => prev.filter(sf => sf.id !== subflowId));
+    message.success('子流程已删除');
+  };
+
+  // 新增：选择节点
+  const onNodeClick = useCallback((event: any, node: Node) => {
+    console.log('点击节点:', node);
+    // 只允许选择非group节点
+    if (node.type === 'group') return;
+    
+    setSelectedNodes(prev => {
+      const isSelected = prev.some(n => n.id === node.id);
+      if (isSelected) {
+        console.log('取消选择节点:', node.id);
+        return prev.filter(n => n.id !== node.id);
+      } else {
+        console.log('选择节点:', node.id);
+        return [...prev, node];
+      }
+    });
+  }, []);
 
   const onConnect = useCallback(
     (params: Connection) => {
@@ -453,7 +686,7 @@ const Workflow: React.FC = () => {
     }
 
     const selectedEdgeIds = selectedEdges.map((edge: any) => edge.id);
-    (setEdges as any)((eds: any) => eds.filter((edge: any) => !selectedEdgeIds.includes(edge.id)));
+    setEdges((eds: any) => eds.filter((edge: any) => !selectedEdgeIds.includes(edge.id)));
     message.success('连线删除成功');
   };
 
@@ -463,7 +696,7 @@ const Workflow: React.FC = () => {
       message.warning('没有可删除的连线');
       return;
     }
-    (setEdges as any)([]);
+    setEdges([]);
     message.success('所有连线已删除');
   };
 
@@ -492,7 +725,7 @@ const Workflow: React.FC = () => {
       },
     };
 
-    (setNodes as any)((nds: any) => [...nds, newNode]);
+    setNodes((nds: any) => [...nds, newNode]);
     setIsAddNodeModalVisible(false);
     setNewNodeData({
       type: 'dataNode',
@@ -513,8 +746,8 @@ const Workflow: React.FC = () => {
     }
 
     const selectedNodeIds = selectedNodes.map((node: any) => node.id);
-    (setNodes as any)((nds: any) => nds.filter((node: any) => !selectedNodeIds.includes(node.id)));
-    (setEdges as any)((eds: any) => eds.filter((edge: any) => !selectedNodeIds.includes(edge.source) && !selectedNodeIds.includes(edge.target)));
+    setNodes((nds: any) => nds.filter((node: any) => !selectedNodeIds.includes(node.id)));
+    setEdges((eds: any) => eds.filter((edge: any) => !selectedNodeIds.includes(edge.source) && !selectedNodeIds.includes(edge.target)));
     message.success('删除成功');
   };
 
@@ -547,8 +780,8 @@ const Workflow: React.FC = () => {
         reader.onload = (event) => {
           try {
             const workflowData = JSON.parse(event.target?.result as string);
-            (setNodes as any)(workflowData.nodes || []);
-            (setEdges as any)(workflowData.edges || []);
+            setNodes(workflowData.nodes || []);
+            setEdges(workflowData.edges || []);
             message.success('工作流加载成功');
           } catch (error) {
             message.error('文件格式错误');
@@ -655,8 +888,8 @@ const Workflow: React.FC = () => {
 
   // 初始化节点和边
   React.useEffect(() => {
-    (setNodes as any)(initialNodes);
-    (setEdges as any)(initialEdges);
+    setNodes(initialNodes);
+    setEdges(initialEdges);
   }, []);
 
   return (
@@ -667,6 +900,7 @@ const Workflow: React.FC = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onNodeClick={onNodeClick}
         nodeTypes={nodeTypes}
         fitView
         attributionPosition="bottom-left"
@@ -687,6 +921,7 @@ const Workflow: React.FC = () => {
             if (n.type === 'processNode') return '#fa8c16';
             if (n.type === 'filterNode') return '#722ed1';
             if (n.type === 'outputNode') return '#eb2f96';
+            if (n.type === 'group') return '#722ed1';
             return '#eee';
           }}
           nodeColor={(n: any) => {
@@ -695,6 +930,7 @@ const Workflow: React.FC = () => {
             if (n.type === 'processNode') return '#fff7e6';
             if (n.type === 'filterNode') return '#f9f0ff';
             if (n.type === 'outputNode') return '#fff0f6';
+            if (n.type === 'group') return '#f9f0ff';
             return '#fff';
           }}
           nodeBorderRadius={2}
@@ -709,6 +945,9 @@ const Workflow: React.FC = () => {
               </div>
               <div style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
                 🗑️ 删除提示：点击连线选中，按Delete键或使用删除按钮删除
+              </div>
+              <div style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
+                📁 子流程提示：选择多个节点后可以创建子流程组
               </div>
               <Space>
                 <Tooltip title="添加节点">
@@ -727,6 +966,26 @@ const Workflow: React.FC = () => {
                     onClick={deleteSelectedNodes}
                   >
                     删除节点
+                  </Button>
+                </Tooltip>
+              </Space>
+              <Space>
+                <Tooltip title="创建子流程组">
+                  <Button
+                    type="primary"
+                    icon={<GroupOutlined />}
+                    onClick={() => setIsCreateSubflowModalVisible(true)}
+                    disabled={selectedNodes.length < 2}
+                  >
+                    创建子流程组 ({selectedNodes.length})
+                  </Button>
+                </Tooltip>
+                <Tooltip title="管理子流程">
+                  <Button
+                    icon={<FolderOutlined />}
+                    onClick={() => setIsSubflowDrawerVisible(true)}
+                  >
+                    子流程管理
                   </Button>
                 </Tooltip>
               </Space>
@@ -788,6 +1047,125 @@ const Workflow: React.FC = () => {
         </Panel>
       </ReactFlow>
 
+      {/* 新增：子流程管理抽屉 */}
+      <Drawer
+        title="子流程管理"
+        placement="right"
+        width={400}
+        open={isSubflowDrawerVisible}
+        onClose={() => setIsSubflowDrawerVisible(false)}
+      >
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => {
+              setIsSubflowDrawerVisible(false);
+              setIsCreateSubflowModalVisible(true);
+            }}
+            style={{ width: '100%' }}
+          >
+            创建新子流程组
+          </Button>
+          <Divider />
+          <List
+            dataSource={subflows}
+            renderItem={(subflow) => (
+              <List.Item
+                actions={[
+                  <Tooltip key="expand" title="展开子流程">
+                    <Button
+                      type="text"
+                      icon={<EyeOutlined />}
+                      onClick={() => expandSubflow(subflow.id)}
+                    />
+                  </Tooltip>,
+                  <Tooltip key="copy" title="复制子流程">
+                    <Button
+                      type="text"
+                      icon={<CopyOutlined />}
+                      onClick={() => copySubflow(subflow)}
+                    />
+                  </Tooltip>,
+                  <Tooltip key="delete" title="删除子流程">
+                    <Button
+                      type="text"
+                      danger
+                      icon={<DeleteOutlined />}
+                      onClick={() => deleteSubflow(subflow.id)}
+                    />
+                  </Tooltip>,
+                ]}
+              >
+                <List.Item.Meta
+                  title={
+                    <Space>
+                      <span>{subflow.name}</span>
+                      <Tag color="purple">{subflow.childNodeIds.length} 节点</Tag>
+                    </Space>
+                  }
+                  description={
+                    <div>
+                      <div>{subflow.description}</div>
+                      <div style={{ fontSize: '12px', color: '#666' }}>
+                        创建时间: {new Date(subflow.createdAt).toLocaleString()}
+                      </div>
+                    </div>
+                  }
+                />
+              </List.Item>
+            )}
+          />
+        </Space>
+      </Drawer>
+
+      {/* 新增：创建子流程模态框 */}
+      <Modal
+        title="创建子流程组"
+        open={isCreateSubflowModalVisible}
+        onOk={createSubflow}
+        onCancel={() => setIsCreateSubflowModalVisible(false)}
+        okText="创建"
+        cancelText="取消"
+      >
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <div>
+            <label>子流程组名称:</label>
+            <Input
+              value={newSubflowData.name}
+              onChange={(e) => setNewSubflowData({ ...newSubflowData, name: e.target.value })}
+              placeholder="请输入子流程组名称"
+            />
+          </div>
+          <div>
+            <label>子流程组描述:</label>
+            <Input.TextArea
+              value={newSubflowData.description}
+              onChange={(e) => setNewSubflowData({ ...newSubflowData, description: e.target.value })}
+              placeholder="请输入子流程组描述"
+              rows={3}
+            />
+          </div>
+          <div>
+            <label>已选择的节点:</label>
+            <div style={{ 
+              padding: '8px', 
+              background: '#f5f5f5', 
+              borderRadius: '4px',
+              maxHeight: '100px',
+              overflow: 'auto'
+            }}>
+              {selectedNodes.map(node => (
+                <Tag key={node.id} style={{ margin: '2px' }}>
+                  {(node as any).data.label}
+                </Tag>
+              ))}
+            </div>
+          </div>
+        </Space>
+      </Modal>
+
+      {/* 原有的添加节点模态框 */}
       <Modal
         title="添加新节点"
         open={isAddNodeModalVisible}
