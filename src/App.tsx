@@ -242,7 +242,9 @@ const AppContent: React.FC = () => {
                 style={{
                     background: '#f5f5f5', // 设置为白色背景
                     height: '100vh', // 确保Sider占满高度
-                    overflow: 'auto' // Sider内部可滚动（如果菜单太多）
+                    overflow: 'auto', // Sider内部可滚动（如果菜单太多）
+                    paddingLeft: '20px', // 增加左侧间距
+                    paddingRight: '10px' // 增加右侧间距
                 }}
             >
                 <div className="demo-logo-vertical" style={{
@@ -273,7 +275,9 @@ const AppContent: React.FC = () => {
             <Layout style={{
                 background: '#fff',
                 borderRadius: borderRadiusLG,
-                margin: '20px 10px'
+                margin: '20px 10px 20px 0', // 调整边距，减少左侧边距
+                height: 'calc(100vh - 40px)', // 确保高度与侧边栏对齐
+                overflow: 'hidden'
             }}>
                 <Content
                     style={{
@@ -283,6 +287,7 @@ const AppContent: React.FC = () => {
                         borderRadius: borderRadiusLG,
                         overflow: 'auto',
                         flex: 1,
+                        height: '100%' // 确保内容区域占满高度
                     }}
                 >
                     <Routes>
